@@ -13,19 +13,19 @@ const product={
     quantity: 1,
   }
 describe("<ListElement/>", () => {   
-it.only("render elements", () => {
+it("render elements", () => {
     render(<ListElement product={product}/>)
     const name=screen.getByText(product.name);
-    expect(name).toBeDefined;
+    expect(name).toBeDefined();
 
     const quantity=screen.getByText(product.quantity);
-    expect(quantity).toBeDefined;
+    expect(quantity).toBeDefined();
 
     const price = screen.getAllByText("0.99zł");
-    expect(price).toBeDefined;
+    expect(price).toBeDefined();
   });
 
-  it.only("check +1 and -1 button", () => {
+  it("check +1 and -1 button", () => {
     const onAddMock = jest.fn();
     const onRemoveMock = jest.fn();
     render(
@@ -48,22 +48,22 @@ it.only("render elements", () => {
     const { rerender } = render(<ListElement product={product} />);
 
     const price = screen.getAllByText("0.99zł");
-    expect(price).toBeDefined;
+    expect(price).toBeDefined();
     
     product.quantity = 0;
 
     rerender(<ListElement product={product} />);
 
-    const unitPrice = screen.getAllByText();
-    expect(unitPrice).toBeUndefined();
-    const sumPrice = screen.getAllByText("1.98zł");
+    const unitPrice = screen.getAllByText("0.99zł");
+    expect(unitPrice).toHaveLength(0);
+    const sumPrice = screen.getAllByText("0.00zł");
     expect(sumPrice).toHaveLength(0);
 
     product.quantity = 3;
     
     rerender(<ListElement product={product} />);
 
-    const unitPrice2 = screen.getAllByText();
+    const unitPrice2 = screen.getAllByText("0.99zł");
     expect(unitPrice2).toHaveLength(1);
     const sumPrice2 = screen.getAllByText("2.97zł");
     expect(sumPrice2).toHaveLength(1);
